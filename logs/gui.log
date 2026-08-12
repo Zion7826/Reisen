@@ -1,0 +1,74 @@
+[2026-08-07 17:02:07] [INFO] [main.py:64] ============================================================
+[2026-08-07 17:02:07] [INFO] [main.py:65] 玻璃瓶缺陷检测系统启动
+[2026-08-07 17:02:07] [INFO] [main.py:66] ============================================================
+[2026-08-07 17:02:08] [INFO] [defect_type_registry.py:85] 从 data.yaml 加载类别键: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-07 17:02:08] [INFO] [main.py:76] 缺陷类型注册表加载完成: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-07 17:02:08] [WARNING] [detection_service.py:59] 模型权重不存在: D:\demo\runs\detect\glass_bottle_defect\weights\best.pt，进入降级占位检测模式
+[2026-08-07 17:02:08] [WARNING] [main.py:80] 检测服务处于降级模式（模型权重未加载）
+[2026-08-07 17:02:10] [INFO] [main.py:97] 主窗口已显示，进入事件循环
+[2026-08-07 17:04:26] [INFO] [main.py:64] ============================================================
+[2026-08-07 17:04:26] [INFO] [main.py:65] 玻璃瓶缺陷检测系统启动
+[2026-08-07 17:04:26] [INFO] [main.py:66] ============================================================
+[2026-08-07 17:04:26] [INFO] [defect_type_registry.py:85] 从 data.yaml 加载类别键: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-07 17:04:26] [INFO] [main.py:76] 缺陷类型注册表加载完成: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-07 17:04:26] [WARNING] [detection_service.py:59] 模型权重不存在: D:\demo\runs\detect\glass_bottle_defect\weights\best.pt，进入降级占位检测模式
+[2026-08-07 17:04:26] [WARNING] [main.py:80] 检测服务处于降级模式（模型权重未加载）
+[2026-08-07 17:04:27] [INFO] [main.py:97] 主窗口已显示，进入事件循环
+[2026-08-07 17:05:45] [INFO] [error_handler.py:85] [操作] 摄像头启动 | 上下文: {'index': 0}
+[2026-08-07 17:05:47] [INFO] [error_handler.py:85] [操作] 摄像头启动 | 上下文: {'index': 0}
+[2026-08-07 17:05:53] [INFO] [camera_worker.py:66] 摄像头已启动，索引: 0，目标帧率: 10
+[2026-08-07 17:05:53] [INFO] [camera_worker.py:96] 摄像头线程结束，共处理 0 帧
+[2026-08-07 17:05:54] [INFO] [camera_worker.py:66] 摄像头已启动，索引: 0，目标帧率: 10
+[2026-08-07 17:05:54] [INFO] [camera_worker.py:96] 摄像头线程结束，共处理 0 帧
+[2026-08-07 17:13:02] [INFO] [image_upload_controller.py:40] 用户选择图片: C:/Users/HUAWEI/Desktop/微信图片_20260807171232_3364_3.jpg
+[2026-08-07 17:13:02] [ERROR] [error_handler.py:59] 图片文件已损坏，无法加载 | 异常: 图片解码失败: C:/Users/HUAWEI/Desktop/微信图片_20260807171232_3364_3.jpg - cv2.imread 返回空
+[2026-08-07 17:13:02] [DEBUG] [error_handler.py:60] Traceback (most recent call last):
+  File "D:\demo\glass_bottle_defect_gui\presentation\main_window.py", line 242, in on_upload_clicked
+    image = self._upload_controller.load_image(path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\demo\glass_bottle_defect_gui\controller\image_upload_controller.py", line 73, in load_image
+    raise ImageDecodeError(path=path, reason="cv2.imread 返回空")
+glass_bottle_defect_gui.infrastructure.exceptions.ImageDecodeError: 图片解码失败: C:/Users/HUAWEI/Desktop/微信图片_20260807171232_3364_3.jpg - cv2.imread 返回空
+
+[2026-08-07 17:14:01] [INFO] [image_upload_controller.py:40] 用户选择图片: C:/Users/HUAWEI/Desktop/屏幕截图 2026-08-07 171323.png
+[2026-08-07 17:14:01] [ERROR] [error_handler.py:59] 图片文件已损坏，无法加载 | 异常: 图片解码失败: C:/Users/HUAWEI/Desktop/屏幕截图 2026-08-07 171323.png - cv2.imread 返回空
+[2026-08-07 17:14:01] [DEBUG] [error_handler.py:60] Traceback (most recent call last):
+  File "D:\demo\glass_bottle_defect_gui\presentation\main_window.py", line 242, in on_upload_clicked
+    image = self._upload_controller.load_image(path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\demo\glass_bottle_defect_gui\controller\image_upload_controller.py", line 73, in load_image
+    raise ImageDecodeError(path=path, reason="cv2.imread 返回空")
+glass_bottle_defect_gui.infrastructure.exceptions.ImageDecodeError: 图片解码失败: C:/Users/HUAWEI/Desktop/屏幕截图 2026-08-07 171323.png - cv2.imread 返回空
+
+[2026-08-07 17:14:21] [INFO] [image_upload_controller.py:40] 用户选择图片: C:/Users/HUAWEI/Desktop/6.png
+[2026-08-07 17:14:23] [INFO] [error_handler.py:85] [操作] 摄像头启动 | 上下文: {'index': 0}
+[2026-08-07 17:14:31] [INFO] [camera_worker.py:66] 摄像头已启动，索引: 0，目标帧率: 10
+[2026-08-07 17:14:31] [INFO] [camera_worker.py:96] 摄像头线程结束，共处理 0 帧
+[2026-08-07 17:14:32] [INFO] [image_upload_controller.py:40] 用户选择图片: C:/Users/HUAWEI/Desktop/6.png
+[2026-08-07 17:14:33] [INFO] [error_handler.py:85] [操作] 检测启动 | 上下文: {'image': '6.png'}
+[2026-08-07 17:14:33] [DEBUG] [detection_service.py:104] 降级占位检测模式，返回空缺陷
+[2026-08-10 16:38:09] [INFO] [main.py:64] ============================================================
+[2026-08-10 16:38:09] [INFO] [main.py:65] 玻璃瓶缺陷检测系统启动
+[2026-08-10 16:38:09] [INFO] [main.py:66] ============================================================
+[2026-08-10 16:38:09] [INFO] [defect_type_registry.py:85] 从 data.yaml 加载类别键: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:38:09] [INFO] [main.py:76] 缺陷类型注册表加载完成: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:38:13] [WARNING] [detection_service.py:74] 模型加载失败: [WinError 1114] 动态链接库(DLL)初始化例程失败。 Error loading "D:\QClaw\v0.2.33.617\resources\python\Lib\site-packages\torch\lib\c10.dll" or one of its dependencies.，进入降级占位检测模式
+[2026-08-10 16:38:13] [WARNING] [main.py:80] 检测服务处于降级模式（模型权重未加载）
+[2026-08-10 16:38:14] [INFO] [main.py:97] 主窗口已显示，进入事件循环
+[2026-08-10 16:39:56] [INFO] [main.py:76] ============================================================
+[2026-08-10 16:39:56] [INFO] [main.py:77] 玻璃瓶缺陷检测系统启动
+[2026-08-10 16:39:56] [INFO] [main.py:78] ============================================================
+[2026-08-10 16:39:56] [INFO] [defect_type_registry.py:85] 从 data.yaml 加载类别键: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:39:56] [INFO] [main.py:88] 缺陷类型注册表加载完成: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:39:57] [INFO] [detection_service.py:72] 模型加载成功: D:\demo\runs\detect\glass_bottle_defect\weights\best.pt，类别: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:39:57] [INFO] [main.py:109] 主窗口已显示，进入事件循环
+[2026-08-10 16:43:02] [INFO] [image_upload_controller.py:40] 用户选择图片: C:/Users/HUAWEI/Desktop/456/03a2e480e72b7905378a523b328d4205.jpg
+[2026-08-10 16:43:05] [INFO] [error_handler.py:85] [操作] 检测启动 | 上下文: {'image': '03a2e480e72b7905378a523b328d4205.jpg'}
+[2026-08-10 16:43:05] [DEBUG] [detection_service.py:104] 降级占位检测模式，返回空缺陷
+[2026-08-10 16:49:40] [INFO] [main.py:76] ============================================================
+[2026-08-10 16:49:40] [INFO] [main.py:77] 玻璃瓶缺陷检测系统启动
+[2026-08-10 16:49:40] [INFO] [main.py:78] ============================================================
+[2026-08-10 16:49:40] [INFO] [defect_type_registry.py:85] 从 data.yaml 加载类别键: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:49:40] [INFO] [main.py:88] 缺陷类型注册表加载完成: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:49:41] [INFO] [detection_service.py:72] 模型加载成功: D:\demo\runs\detect\glass_bottle_defect\weights\best.pt，类别: ['crack', 'bubble', 'scratch', 'stain']
+[2026-08-10 16:49:41] [INFO] [main.py:109] 主窗口已显示，进入事件循环

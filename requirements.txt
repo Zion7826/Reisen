@@ -1,0 +1,30 @@
+# ===== 核心依赖清单 =====
+# 注意：PyTorch 通过专用 index-url 安装，不写在此处
+# 注意：ultralytics 会自动拉取 torch，但建议先单独装好 torch 指定版本
+
+# OpenCV 计算机视觉库
+opencv-python==4.10.0.84
+
+# ultralytics 官方包（YOLOv8 / YOLO11）
+ultralytics==8.3.78
+
+# PyQt5 桌面 GUI 框架
+PyQt5==5.15.11
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.13.0
+
+# ===== 辅助依赖 =====
+# ultralytics 运行所需的常见依赖（pip 会自动处理，这里显式声明便于离线排错）
+numpy>=1.26.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+Pillow>=10.0.0
+PyYAML>=6.0
+requests>=2.31.0
+scipy>=1.11.0
+tqdm>=4.66.0
+seaborn>=0.12.0
+psutil>=5.9.0
+py-cpuinfo>=9.0.0
+onnx>=1.16.0
+onnxruntime>=1.18.0

@@ -1,0 +1,30 @@
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+venv/
+env/
+
+# 模型权重（太大，保留本地）
+*.pt
+*.pth
+
+# 训练输出
+runs/
+
+# 数据集原始图片（本地已有）
+datasets/
+ai_redbox/
+ai_clean/
+ai_labels/
+
+# 构建产物
+dist/
+build/
+*.spec
+
+# IDE
+.vscode/
+.idea/

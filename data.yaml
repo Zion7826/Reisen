@@ -1,0 +1,11 @@
+﻿# 玻璃瓶缺陷检测数据集
+path: D:\demo\datasets\glass_bottle
+train: images/train
+val: images/val
+
+nc: 4
+names:
+  0: crack      # 裂纹
+  1: bubble     # 气泡
+  2: scratch    # 划痕
+  3: stain      # 污渍
