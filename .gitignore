@@ -1,30 +1,40 @@
-﻿# Python
-__pycache__/
-*.pyc
-*.pyo
-.pytest_cache/
-*.egg-info/
-venv/
-env/
-
-# 模型权重（太大，保留本地）
+# weights
 *.pt
 *.pth
+*.onnx
 
-# 训练输出
+# outputs
 runs/
+debug_labels/
+detection_results/
+__pycache__/
+*.cache
 
-# 数据集原始图片（本地已有）
-datasets/
-ai_redbox/
+# codearts metadata
+.codeartsdoer/
+.merkle-snapshot.json
+
+# old AI-generated (to be removed from repo)
+glass_bottle_defect_gui/
+scripts/
+redbox_to_yolo.py
+download_defect_images.py
+generate_labels.py
+create_venv.py
+setup.bat
+
+# failed mvtec attempts (nested git repos, empty)
+datasets/mvtec_bottle/
+datasets/mvtec_bottle_v2/
+datasets/mvtec_test/
+
+# old experiments
 ai_clean/
 ai_labels/
+detect_preview_*.jpg
+result_*.jpg
+result_desk.jpg
 
-# 构建产物
-dist/
-build/
-*.spec
-
-# IDE
-.vscode/
-.idea/
+# system
+.DS_Store
+Thumbs.db
