@@ -15,7 +15,7 @@ __pycache__/
 .merkle-snapshot.json
 
 # old AI-generated (to be removed from repo)
-glass_bottle_defect_gui/
+
 scripts/
 redbox_to_yolo.py
 download_defect_images.py

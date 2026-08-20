@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玻璃瓶缺陷检测系统 - GUI使用说明</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 10px 0 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .gui-preview {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .gui-layout {
+            display: flex;
+            gap: 20px;
+            min-height: 500px;
+        }
+        .left-panel {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .right-panel {
+            flex: 2;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .panel-section {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        .panel-section h3 {
+            margin: 0 0 10px;
+            color: #333;
+            font-size: 16px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #38a169;
+        }
+        .btn-warning {
+            background: #ed8936;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #dd6b20;
+        }
+        .btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+        .slider-container {
+            margin: 15px 0;
+        }
+        .slider-label {
+            text-align: center;
+            font-size: 18px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            margin-top: 10px;
+        }
+        .slider-fill {
+            width: 25%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+        .stats {
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.8;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            border-bottom-color: #667eea;
+            color: #667eea;
+            font-weight: bold;
+        }
+        .tab-content {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 400px;
+        }
+        .image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            background: #e0e0e0;
+            border-radius: 8px;
+            color: #999;
+            font-size: 18px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        .table tr:hover {
+            background: #f5f5f5;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .feature-list li:before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .color-legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 玻璃瓶缺陷检测系统</h1>
+            <p>基于 YOLOv8 的智能缺陷检测 GUI 界面</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🚀 启动方式</h2>
+                <div class="code-block">
+                    python -m glass_bottle_defect_gui.main
+                </div>
+                <p>或使用简化版（无摄像头功能）：</p>
+                <div class="code-block">
+                    python glass_bottle_defect_gui\simple_main.py
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🖥️ GUI 界面预览</h2>
+                <div class="gui-preview">
+                    <div class="gui-layout">
+                        <div class="left-panel">
+                            <div class="panel-section">
+                                <h3>📷 图片检测</h3>
+                                <button class="btn btn-primary">上传图片</button>
+                                <button class="btn btn-success" disabled>开始检测</button>
+                                <button class="btn btn-warning" disabled>保存结果</button>
+                            </div>
+
+                            <div class="panel-section">
+                                <h3>📹 摄像头检测</h3>
+                                <button class="btn btn-primary">打开摄像头</button>
+                            </div>
+
+                            <div class="panel-section">
+                                <h3>🎯 置信度阈值</h3>
+                                <div class="slider-container">
+                                    <div class="slider-label">0.25</div>
+                                    <div class="slider">
+                                        <div class="slider-fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-section">
+                                <h3>📊 检测结果</h3>
+                                <div class="stats">
+                                    等待检测...
+                                </div>
+                            </div>
+
+                            <div class="panel-section">
+                                <h3>📄 导出报告</h3>
+                                <button class="btn btn-primary" disabled>导出检测报告</button>
+                            </div>
+                        </div>
+
+                        <div class="right-panel">
+                            <div class="tabs">
+                                <div class="tab active">图片显示</div>
+                                <div class="tab">检测详情</div>
+                                <div class="tab">运行日志</div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="image-placeholder">
+                                    请上传图片
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✨ 功能特性</h2>
+                <ul class="feature-list">
+                    <li><strong>图片检测</strong>：支持上传 JPG、PNG、BMP 等格式图片进行缺陷检测</li>
+                    <li><strong>摄像头检测</strong>：支持实时摄像头视频流检测</li>
+                    <li><strong>结果可视化</strong>：在原图上绘制检测框，显示类别和置信度</li>
+                    <li><strong>置信度调节</strong>：可滑动调整检测置信度阈值（0.01-1.00）</li>
+                    <li><strong>结果保存</strong>：一键保存检测结果图片</li>
+                    <li><strong>报告导出</strong>：导出 Excel 格式的检测报告</li>
+                    <li><strong>详情查看</strong>：表格显示每个缺陷的详细信息</li>
+                    <li><strong>运行日志</strong>：实时显示操作日志和时间戳</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🎨 缺陷类别</h2>
+                <div class="color-legend">
+                    <div class="color-item">
+                        <div class="color-box" style="background: rgb(0,0,255);"></div>
+                        <span>crack - 裂纹</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box" style="background: rgb(0,255,255);"></div>
+                        <span>bubble - 气泡</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box" style="background: rgb(255,0,0);"></div>
+                        <span>scratch - 划痕</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box" style="background: rgb(0,255,0);"></div>
+                        <span>stain - 污渍</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 使用流程</h2>
+                <ol style="line-height: 2; font-size: 16px;">
+                    <li>点击<strong>"上传图片"</strong>按钮，选择待检测的图片文件</li>
+                    <li>调整<strong>"置信度阈值"</strong>滑块，设置检测灵敏度（默认 0.25）</li>
+                    <li>点击<strong>"开始检测"</strong>按钮，执行缺陷检测</li>
+                    <li>在<strong>"图片显示"</strong>标签页查看检测结果（带检测框）</li>
+                    <li>在<strong>"检测详情"</strong>标签页查看每个缺陷的详细信息</li>
+                    <li>点击<strong>"保存结果"</strong>按钮，保存检测后的图片</li>
+                    <li>（可选）点击<strong>"导出检测报告"</strong>，导出 Excel 报告</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>💾 文件说明</h2>
+                <table class="table">
+                    <tr>
+                        <th>文件/目录</th>
+                        <th>说明</th>
+                    </tr>
+                    <tr>
+                        <td>glass_bottle_defect_gui/main.py</td>
+                        <td>GUI 程序入口文件</td>
+                    </tr>
+                    <tr>
+                        <td>glass_bottle_defect_gui/simple_main.py</td>
+                        <td>简化版入口（无摄像头功能）</td>
+                    </tr>
+                    <tr>
+                        <td>glass_bottle_defect_gui/service/detection_service.py</td>
+                        <td>检测服务核心逻辑</td>
+                    </tr>
+                    <tr>
+                        <td>glass_bottle_defect_gui/presentation/main_window.py</td>
+                        <td>主窗口界面实现</td>
+                    </tr>
+                    <tr>
+                        <td>detection_results/</td>
+                        <td>检测结果保存目录</td>
+                    </tr>
+                    <tr>
+                        <td>logs/</td>
+                        <td>运行日志目录</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
