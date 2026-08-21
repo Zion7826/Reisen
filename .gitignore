@@ -38,3 +38,21 @@ result_desk.jpg
 # system
 .DS_Store
 Thumbs.db
+
+# test files
+gui_output*.txt
+simple_test.txt
+test.txt
+test_output.txt
+gui_test_with_logging.py
+minimal_test.py
+pyqt5_test.py
+test_gui.py
+test_gui_direct.py
+test_gui_full.py
+test_tkinter.py
+test_write.py
+launcher.py
+start.bat
+start_gui.bat
+gui_test.log

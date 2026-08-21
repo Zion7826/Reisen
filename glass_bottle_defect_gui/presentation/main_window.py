@@ -40,6 +40,7 @@ class MainWindow(QMainWindow):
         """初始化界面"""
         self.setWindowTitle("玻璃瓶缺陷检测系统")
         self.setGeometry(100, 100, 1200, 800)
+        self.setMinimumSize(800, 600)
 
         # 主部件
         main_widget = QWidget()

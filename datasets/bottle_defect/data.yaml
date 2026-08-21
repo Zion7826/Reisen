@@ -1,0 +1,10 @@
+# 玻璃瓶缺陷检测数据集 (MVTec bottle)
+path: D:\demo\datasets\bottle_defect
+train: images/train
+val: images/val
+
+nc: 3
+names:
+  0: broken_large    # 大破损
+  1: broken_small    # 小破损
+  2: contamination   # 污染
