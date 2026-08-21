@@ -1,0 +1,71 @@
+2026-08-21 14:30:16 [INFO] ============================================================
+2026-08-21 14:30:16 [INFO] 玻璃瓶缺陷检测 - 最佳状态训练
+2026-08-21 14:30:16 [INFO] ============================================================
+2026-08-21 14:30:16 [INFO] Python: 3.12.10
+2026-08-21 14:30:16 [INFO] PyTorch: 2.5.1+cpu
+2026-08-21 14:30:16 [INFO] 设备: cpu
+2026-08-21 14:30:16 [INFO] ============================================================
+2026-08-21 14:30:16 [INFO] 从上次训练的last.pt继续: runs/detect/runs/detect/bottle_defect/weights/last.pt
+2026-08-21 14:30:16 [INFO] 
+准备第 1 轮训练，使用模型: runs/detect/runs/detect/bottle_defect/weights/last.pt
+2026-08-21 14:30:16 [INFO] ============================================================
+2026-08-21 14:30:16 [INFO] 开始第 1 轮训练 (epochs=300, lr=0.001)
+2026-08-21 14:30:16 [INFO] ============================================================
+2026-08-21 14:30:16 [INFO] 加载模型: runs/detect/runs/detect/bottle_defect/weights/last.pt
+2026-08-21 16:29:30 [INFO] 第 1 轮训练完成，耗时: 119.23 分钟
+2026-08-21 16:29:30 [INFO] 评估模型...
+2026-08-21 16:29:37 [INFO] ------------------------------------------------------------
+2026-08-21 16:29:37 [INFO] 第 1 轮评估结果:
+2026-08-21 16:29:37 [INFO]   mAP@0.5      : 0.8492  (84.92%)
+2026-08-21 16:29:37 [INFO]   mAP@0.5:0.95 : 0.5585  (55.85%)
+2026-08-21 16:29:37 [INFO]   平均 Precision: 0.8433
+2026-08-21 16:29:37 [INFO]   平均 Recall   : 0.7857
+2026-08-21 16:29:37 [INFO]   各类别 mAP@0.5:
+2026-08-21 16:29:37 [INFO]     [0] broken_large   : 0.5421  (54.21%)
+2026-08-21 16:29:37 [INFO]     [1] broken_small   : 0.5627  (56.27%)
+2026-08-21 16:29:37 [INFO]     [2] contamination  : 0.5706  (57.06%)
+2026-08-21 16:29:37 [INFO] ------------------------------------------------------------
+2026-08-21 16:29:37 [WARNING] 最佳权重未找到: runs/detect/bottle_best/weights/best.pt，使用last.pt
+2026-08-21 16:29:37 [INFO] 
+准备第 2 轮训练，使用模型: runs/detect/bottle_best/weights/last.pt
+2026-08-21 16:29:37 [INFO] ============================================================
+2026-08-21 16:29:37 [INFO] 开始第 2 轮训练 (epochs=400, lr=0.0005)
+2026-08-21 16:29:37 [INFO] ============================================================
+2026-08-21 16:29:37 [INFO] 加载模型: runs/detect/bottle_best/weights/last.pt
+2026-08-21 16:29:38 [ERROR] 训练出错: [Errno 2] No such file or directory: 'runs\\detect\\bottle_best\\weights\\last.pt'
+Traceback (most recent call last):
+  File "D:\demo\train_bottle_best.py", line 183, in main
+    best_pt, map50, precision, recall = train_round(
+                                        ^^^^^^^^^^^^
+  File "D:\demo\train_bottle_best.py", line 50, in train_round
+    model = YOLO(model_path)
+            ^^^^^^^^^^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\models\yolo\model.py", line 82, in __init__
+    super().__init__(model=model, task=task, verbose=verbose)
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\engine\model.py", line 133, in __init__
+    self._load(model, task=task)
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\engine\model.py", line 249, in _load
+    self.model, self.ckpt = load_checkpoint(weights)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\nn\tasks.py", line 1902, in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\nn\tasks.py", line 1801, in torch_safe_load
+    ckpt = _load()
+           ^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\nn\tasks.py", line 1792, in _load
+    return torch_load(file, map_location="cpu")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\utils\patches.py", line 181, in torch_load
+    return torch.load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\serialization.py", line 1319, in load
+    with _open_file_like(f, "rb") as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\serialization.py", line 659, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\serialization.py", line 640, in __init__
+    super().__init__(open(name, mode))
+                     ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'runs\\detect\\bottle_best\\weights\\last.pt'

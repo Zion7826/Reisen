@@ -1,0 +1,59 @@
+2026-08-20 17:36:14 [INFO] ============================================================
+2026-08-20 17:36:14 [INFO] 玻璃瓶缺陷检测 - 多轮训练
+2026-08-20 17:36:14 [INFO] ============================================================
+2026-08-20 17:36:14 [INFO] Python: 3.12.10
+2026-08-20 17:36:14 [INFO] PyTorch: 2.5.1+cpu
+2026-08-20 17:36:14 [INFO] 设备: cpu
+2026-08-20 17:36:14 [INFO] 数据集: datasets/bottle_defect/data.yaml
+2026-08-20 17:36:14 [INFO] ============================================================
+2026-08-20 17:36:14 [INFO] ============================================================
+2026-08-20 17:36:14 [INFO] 开始第 1 轮训练
+2026-08-20 17:36:14 [INFO] ============================================================
+2026-08-20 17:36:14 [INFO] 加载预训练模型: yolov8n.pt
+2026-08-20 17:36:14 [INFO] 训练配置:
+2026-08-20 17:36:14 [INFO]   训练轮数: 300
+2026-08-20 17:36:14 [INFO]   学习率: 0.001
+2026-08-20 17:36:14 [INFO]   批大小: 16
+2026-08-20 17:36:14 [INFO]   图像尺寸: 640
+2026-08-20 18:53:48 [INFO] 第 1 轮训练完成，耗时: 77.57 分钟
+2026-08-20 18:53:48 [INFO] 评估模型...
+2026-08-20 18:53:51 [INFO] ------------------------------------------------------------
+2026-08-20 18:53:51 [INFO] 第 1 轮评估结果:
+2026-08-20 18:53:51 [INFO]   mAP@0.5      : 0.8151  (81.51%)
+2026-08-20 18:53:51 [INFO]   mAP@0.5:0.95 : 0.5597  (55.97%)
+2026-08-20 18:53:51 [INFO]   平均 Precision: 0.8582
+2026-08-20 18:53:51 [INFO]   平均 Recall   : 0.7857
+2026-08-20 18:53:51 [INFO]   各类别 mAP@0.5:
+2026-08-20 18:53:51 [INFO]     [0] broken_large   : 0.5900  (59.00%)
+2026-08-20 18:53:51 [INFO]     [1] broken_small   : 0.6293  (62.93%)
+2026-08-20 18:53:51 [INFO]     [2] contamination  : 0.4598  (45.98%)
+2026-08-20 18:53:51 [INFO] ------------------------------------------------------------
+2026-08-20 18:53:51 [INFO] 第 1 轮训练完成，最佳模型: runs/detect/bottle_defect/weights/best.pt
+2026-08-20 18:53:51 [INFO] ============================================================
+2026-08-20 18:53:51 [INFO] 开始第 2 轮训练
+2026-08-20 18:53:51 [INFO] ============================================================
+2026-08-20 18:53:51 [INFO] 加载预训练模型: yolov8n.pt
+2026-08-20 18:53:51 [INFO] 训练配置:
+2026-08-20 18:53:51 [INFO]   训练轮数: 400
+2026-08-20 18:53:51 [INFO]   学习率: 0.0005
+2026-08-20 18:53:51 [INFO]   批大小: 16
+2026-08-20 18:53:51 [INFO]   图像尺寸: 640
+2026-08-20 22:15:04 [ERROR] 训练出错: [Errno 22] Invalid argument
+Traceback (most recent call last):
+  File "D:\demo\train_bottle_multi.py", line 186, in main
+    best_pt, map50, precision, recall = train_round(
+                                        ^^^^^^^^^^^^
+  File "D:\demo\train_bottle_multi.py", line 79, in train_round
+    model.train(
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\engine\model.py", line 836, in train
+    self.trainer.train()
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\engine\trainer.py", line 243, in train
+    self._do_train()
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\engine\trainer.py", line 463, in _do_train
+    for i, batch in pbar:
+                    ^^^^
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\utils\tqdm.py", line 356, in __iter__
+    self.close()
+  File "C:\Users\HUAWEI\AppData\Local\Programs\Python\Python312\Lib\site-packages\ultralytics\utils\tqdm.py", line 329, in close
+    self.file.write("\n")
+OSError: [Errno 22] Invalid argument

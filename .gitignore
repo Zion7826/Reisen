@@ -1,10 +1,8 @@
-# weights
-*.pt
+# weights (允许提交训练权重)
 *.pth
 *.onnx
 
 # outputs
-runs/
 debug_labels/
 detection_results/
 __pycache__/
