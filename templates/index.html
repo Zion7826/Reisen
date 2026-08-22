@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玻璃瓶缺陷智能检测系统</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部标题栏 -->
+        <header class="header">
+            <h1>🔬 玻璃瓶缺陷智能检测系统</h1>
+            <p>Flask + YOLOv8 · 支持实时摄像头检测与图片上传检测</p>
+        </header>
+
+        <!-- Tab 导航栏 -->
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="switchTab('live')">📹 实时检测</button>
+            <button class="tab-btn" onclick="switchTab('upload')">📁 图片检测</button>
+        </nav>
+
+        <!-- 颜色图例 -->
+        <div class="legend">
+            <div class="legend-item"><span class="dot" style="background:#ff0000"></span>裂纹 crack</div>
+            <div class="legend-item"><span class="dot" style="background:#0000ff"></span>气泡 bubble</div>
+            <div class="legend-item"><span class="dot" style="background:#ffff00"></span>划痕 scratch</div>
+            <div class="legend-item"><span class="dot" style="background:#00ff00"></span>污渍 stain</div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- Tab1: 实时检测 -->
+        <!-- ============================== -->
+        <div id="tab-live" class="tab-content active">
+            <div class="live-layout">
+                <!-- 左侧：实时画面 -->
+                <div class="live-video-section">
+                    <h3>实时摄像头画面</h3>
+                    <div class="video-wrapper">
+                        <img id="videoFeed" src="/video_feed" alt="实时视频流">
+                    </div>
+                    <div class="live-controls">
+                        <button class="btn btn-green" onclick="toggleVideo()">暂停/继续</button>
+                        <button class="btn btn-orange" onclick="captureSnapshot()">截图保存</button>
+                    </div>
+                </div>
+
+                <!-- 右侧：检测日志 -->
+                <div class="live-log-section">
+                    <h3>检测日志</h3>
+                    <div id="liveLog" class="log-list">
+                        <div class="log-item log-info">系统已启动，等待检测...</div>
+                    </div>
+                    <div class="live-stats">
+                        <div class="stat-mini">
+                            <span class="stat-num" id="liveFps">0</span>
+                            <span class="stat-label">FPS</span>
+                        </div>
+                        <div class="stat-mini">
+                            <span class="stat-num" id="liveDefects">0</span>
+                            <span class="stat-label">当前缺陷</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- Tab2: 图片检测 -->
+        <!-- ============================== -->
+        <div id="tab-upload" class="tab-content">
+            <!-- 拖拽上传区 -->
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">📁</div>
+                <p>点击或拖拽图片到此处上传（支持多张）</p>
+                <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+                <button class="btn btn-purple" onclick="document.getElementById('fileInput').click()">选择图片</button>
+            </div>
+
+            <!-- 加载中 -->
+            <div id="loading" class="loading-bar">
+                <div class="spinner"></div>
+                <p>正在检测中...</p>
+            </div>
+
+            <!-- 结果展示区 -->
+            <div id="resultArea" class="result-area">
+                <!-- 汇总统计 -->
+                <div id="summaryStats" class="summary-stats"></div>
+
+                <!-- 图片对比网格 -->
+                <div id="imageGrid" class="image-grid"></div>
+            </div>
+        </div>
+
+        <!-- 底部总统计 -->
+        <footer class="footer-stats">
+            <div class="footer-title">总缺陷数量统计</div>
+            <div class="footer-counts">
+                <div class="count-item">
+                    <span class="count-dot" style="background:#ff0000"></span>
+                    <span class="count-label">裂纹</span>
+                    <span class="count-num" id="totalCrack">0</span>
+                </div>
+                <div class="count-item">
+                    <span class="count-dot" style="background:#0000ff"></span>
+                    <span class="count-label">气泡</span>
+                    <span class="count-num" id="totalBubble">0</span>
+                </div>
+                <div class="count-item">
+                    <span class="count-dot" style="background:#ffff00"></span>
+                    <span class="count-label">划痕</span>
+                    <span class="count-num" id="totalScratch">0</span>
+                </div>
+                <div class="count-item">
+                    <span class="count-dot" style="background:#00ff00"></span>
+                    <span class="count-label">污渍</span>
+                    <span class="count-num" id="totalStain">0</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== Tab 切换 ====================
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            if (tab === 'live') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('tab-live').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('tab-upload').classList.add('active');
+            }
+        }
+
+        // ==================== 实时检测 ====================
+        let videoPaused = false;
+
+        function toggleVideo() {
+            const img = document.getElementById('videoFeed');
+            if (videoPaused) {
+                img.src = '/video_feed';
+                videoPaused = false;
+                addLog('视频已恢复', 'info');
+            } else {
+                img.src = '';
+                videoPaused = true;
+                addLog('视频已暂停', 'warn');
+            }
+        }
+
+        function captureSnapshot() {
+            fetch('/upload', {
+                method: 'POST',
+                body: new FormData()
+            }).catch(() => {});
+            addLog('截图已保存', 'success');
+        }
+
+        function addLog(msg, type) {
+            const log = document.getElementById('liveLog');
+            const item = document.createElement('div');
+            item.className = `log-item log-${type || 'info'}`;
+            item.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            log.insertBefore(item, log.firstChild);
+            if (log.children.length > 50) log.removeChild(log.lastChild);
+        }
+
+        // ==================== 图片上传 ====================
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+
+        // 拖拽事件
+        uploadZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+        uploadZone.addEventListener('drop', e => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        uploadZone.addEventListener('click', e => {
+            if (e.target.tagName !== 'BUTTON') fileInput.click();
+        });
+        fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            if (!files.length) return;
+
+            const formData = new FormData();
+            for (let f of files) formData.append('files', f);
+
+            document.getElementById('loading').classList.add('show');
+            addLog(`开始检测 ${files.length} 张图片...`, 'info');
+
+            fetch('/upload', { method: 'POST', body: formData })
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('loading').classList.remove('show');
+                    if (data.success) {
+                        displayResults(data);
+                        updateTotalCounts(data.total_counts);
+                        addLog(`检测完成，共发现 ${data.total_defects} 个缺陷`, 'success');
+                    } else {
+                        alert('检测失败: ' + data.error);
+                        addLog('检测失败: ' + data.error, 'error');
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('loading').classList.remove('show');
+                    alert('请求失败: ' + err);
+                });
+        }
+
+        function displayResults(data) {
+            // 汇总统计
+            const summary = document.getElementById('summaryStats');
+            summary.innerHTML = `
+                <div class="summary-card">
+                    <div class="summary-num">${data.results.length}</div>
+                    <div class="summary-label">检测图片数</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-num">${data.total_defects}</div>
+                    <div class="summary-label">总缺陷数</div>
+                </div>
+                ${Object.entries(data.total_counts).map(([k, v]) => `
+                    <div class="summary-card">
+                        <div class="summary-num">${v}</div>
+                        <div class="summary-label">${k}</div>
+                    </div>
+                `).join('')}
+            `;
+
+            // 图片对比网格
+            const grid = document.getElementById('imageGrid');
+            grid.innerHTML = data.results.map(r => {
+                if (!r.success) {
+                    return `<div class="image-card error">
+                        <h4>${r.filename}</h4>
+                        <p class="error-msg">${r.error}</p>
+                    </div>`;
+                }
+                return `
+                    <div class="image-card">
+                        <h4>${r.filename} <span class="badge">${r.detection_count} 个缺陷</span></h4>
+                        <div class="image-pair">
+                            <div class="image-side">
+                                <img src="${r.original_url}" alt="原图">
+                                <span class="image-tag">原图</span>
+                            </div>
+                            <div class="image-side">
+                                <img src="${r.result_url}" alt="检测结果">
+                                <span class="image-tag">检测结果</span>
+                            </div>
+                        </div>
+                        <div class="card-stats">
+                            ${Object.entries(r.class_counts).filter(([_, v]) => v > 0).map(([k, v]) => `
+                                <span class="mini-badge">${k}: ${v}</span>
+                            `).join('') || '<span class="mini-badge none">无缺陷</span>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateTotalCounts(counts) {
+            document.getElementById('totalCrack').textContent = counts.crack || 0;
+            document.getElementById('totalBubble').textContent = counts.bubble || 0;
+            document.getElementById('totalScratch').textContent = counts.scratch || 0;
+            document.getElementById('totalStain').textContent = counts.stain || 0;
+        }
+    </script>
+</body>
+</html>

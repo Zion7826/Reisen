@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# 虚拟环境
+venv/
+env/
+
+# 上传和输出目录
+uploads/
+output/
+
+# 模型权重（较大，按需取消注释）
+# weights/*.pt
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
