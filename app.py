@@ -49,24 +49,22 @@ CLASS_NAMES, NUM_CLASSES = load_data_yaml()
 
 # 类名 → 颜色映射 (B, G, R)
 CLASS_COLORS = {
-    "crack":   (0, 0, 255),      # 红色
-    "bubble":  (255, 0, 0),      # 蓝色
-    "scratch": (0, 255, 255),    # 黄色
-    "stain":   (0, 255, 0),      # 绿色
+    "broken_large":     (0, 0, 255),    # 红色
+    "broken_small":     (255, 0, 0),    # 蓝色
+    "contamination":    (0, 255, 0),    # 绿色
 }
 
 # 类名 → 中文名映射
 CLASS_NAMES_CN = {
-    "crack":   "裂纹",
-    "bubble":  "气泡",
-    "scratch": "划痕",
-    "stain":   "污渍",
+    "broken_large":     "大破损",
+    "broken_small":     "小破损",
+    "contamination":    "污染",
 }
 
 # ============================================================
 # 全局加载 YOLOv8 模型
 # ============================================================
-MODEL_PATH = WEIGHTS_DIR / "yolov8n.pt"
+MODEL_PATH = WEIGHTS_DIR / "best.pt"
 DEVICE = "cpu"
 CONF_THRESHOLD = 0.25
 IOU_THRESHOLD = 0.45
