@@ -47,7 +47,7 @@ class DefectDetector:
         self.cflow = None
 
         if unetpp_path and os.path.exists(unetpp_path):
-            self.unetpp = UNetPP(in_ch=3, num_classes=4, base_ch=32)
+            self.unetpp = UNetPP(in_ch=3, num_classes=4, base_ch=16, deep_supervision=True)
             state = torch.load(unetpp_path, map_location=device, weights_only=True)
             self.unetpp.load_state_dict(state)
             self.unetpp.to(device).eval()
@@ -109,7 +109,6 @@ class DefectDetector:
                 if count > 50:
                     cls_idx = cls_val - 1
                     cls_name = CLASS_NAMES[cls_idx]
-                    class_counts[cls_name] = count
 
                     ys, xs = np.where(seg_mask == cls_val)
                     if len(xs) > 0:
@@ -124,6 +123,7 @@ class DefectDetector:
                             'area_ratio': round(area_ratio, 4),
                             'pixel_count': count,
                         })
+                        class_counts[cls_name] = class_counts.get(cls_name, 0) + 1
 
         if self.cflow is not None:
             tensor = preprocess_for_anomaly(image_bgr, (self.img_size, self.img_size))

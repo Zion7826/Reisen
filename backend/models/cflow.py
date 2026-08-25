@@ -82,7 +82,7 @@ class CflowBlock(nn.Module):
 class FeatureExtractor(nn.Module):
     """EfficientNet-B3 多尺度特征提取器"""
 
-    def __init__(self, out_indices=(4, 11, 16)):
+    def __init__(self, out_indices=(4, 6, 7)):
         super().__init__()
         weights = EfficientNet_B3_Weights.IMAGENET1K_V1
         backbone = efficientnet_b3(weights=weights)
@@ -113,9 +113,9 @@ class CflowAD(nn.Module):
 
     def __init__(self, flow_layers=4, hidden_ch=128):
         super().__init__()
-        self.extractor = FeatureExtractor(out_indices=(4, 11, 16))
+        self.extractor = FeatureExtractor(out_indices=(4, 6, 7))
 
-        feature_channels = [48, 136, 384]
+        feature_channels = [96, 232, 384]
 
         self.flows = nn.ModuleList([
             CflowBlock(ch, num_layers=flow_layers, hidden_ch=hidden_ch)
@@ -143,7 +143,7 @@ class CflowAD(nn.Module):
         for i, (feat, flow) in enumerate(zip(feats, self.flows)):
             z, log_det = flow(feat)
 
-            nll = 0.5 * (z ** 2).sum(dim=1) - log_det
+            nll = 0.5 * (z ** 2).sum(dim=1) - log_det.unsqueeze(1).unsqueeze(2)
             nll_per_pixel = nll / (feat.shape[2] * feat.shape[3])
 
             anomaly_map = F.interpolate(
