@@ -1,0 +1,45 @@
+============================================================
+UNet++ 续训 (从断点继续)
+============================================================
+已加载权重: D:\dlgd-pharma\train\weights\unetpp_best.pth
+
+--- 续训第1轮: epochs=20, lr=0.0005 ---
+  Epoch   1/20 | Train: 0.7918 | Val: 0.8060 *BEST*
+  Epoch   2/20 | Train: 0.7819 | Val: 0.7684 *BEST*
+  Epoch   3/20 | Train: 0.7666 | Val: 0.7658 *BEST*
+  Epoch   5/20 | Train: 0.7454 | Val: 0.7473 *BEST*
+  Epoch   7/20 | Train: 0.7308 | Val: 0.7048 *BEST*
+  Epoch   8/20 | Train: 0.6926 | Val: 0.6775 *BEST*
+  Epoch   9/20 | Train: 0.6361 | Val: 0.6241 *BEST*
+  Epoch  10/20 | Train: 0.5876 | Val: 0.4944 *BEST*
+  Epoch  11/20 | Train: 0.4960 | Val: 0.4060 *BEST*
+  Epoch  12/20 | Train: 0.4239 | Val: 0.3693 *BEST*
+  Epoch  13/20 | Train: 0.3514 | Val: 0.3318 *BEST*
+  Epoch  14/20 | Train: 0.3267 | Val: 0.3025 *BEST*
+  Epoch  15/20 | Train: 0.3144 | Val: 0.2889 *BEST*
+  Epoch  16/20 | Train: 0.2821 | Val: 0.2814 *BEST*
+  Epoch  17/20 | Train: 0.2891 | Val: 0.2709 *BEST*
+  Epoch  18/20 | Train: 0.2862 | Val: 0.2695 *BEST*
+  Epoch  19/20 | Train: 0.2703 | Val: 0.2661 *BEST*
+  Epoch  20/20 | Train: 0.2777 | Val: 0.2623 *BEST*
+
+--- 续训第2轮: epochs=15, lr=0.0001 ---
+  Epoch   1/15 | Train: 0.2744 | Val: 0.2536 *BEST*
+  Epoch   2/15 | Train: 0.2505 | Val: 0.2420 *BEST*
+  Epoch   4/15 | Train: 0.2396 | Val: 0.2372 *BEST*
+  Epoch   5/15 | Train: 0.2310 | Val: 0.2293 *BEST*
+  Epoch   7/15 | Train: 0.2338 | Val: 0.2292 *BEST*
+  Epoch   8/15 | Train: 0.2259 | Val: 0.2223 *BEST*
+  Epoch   9/15 | Train: 0.2210 | Val: 0.2116 *BEST*
+  Epoch  10/15 | Train: 0.2113 | Val: 0.2165
+  Epoch  14/15 | Train: 0.2266 | Val: 0.2063 *BEST*
+  Epoch  15/15 | Train: 0.2182 | Val: 0.2094
+
+--- 续训第3轮: epochs=10, lr=1e-05 ---
+  Epoch   1/10 | Train: 0.2338 | Val: 0.2034 *BEST*
+  Epoch   5/10 | Train: 0.2447 | Val: 0.2053
+  Epoch  10/10 | Train: 0.2065 | Val: 0.2107
+
+============================================================
+续训完成! 最佳验证损失: 0.2034
+============================================================

@@ -14,26 +14,9 @@ output/
 # 数据集（太大）
 data/
 
-# 模型权重和记忆库
-train/weights/
-*.npy
-*.pth
-*.zip
-
 # 日志和临时文件
-*.txt
 *.log
 *.out
-
-# 临时脚本
-start_flask.bat
-launch_flask.py
-download_dataset.py
-download_datasets2.py
-test_api.py
-test_detector.py
-test_normal.py
-test_train.py
 
 # 系统文件
 .DS_Store

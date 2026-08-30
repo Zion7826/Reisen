@@ -1,0 +1,22 @@
+============================================================
+玻璃瓶缺陷智能检测系统 (UNet++ + Cflow)
+============================================================
+类别数: 3
+类别名: ['broken_large', 'broken_small', 'contamination']
+[UNet++] 加载成功: D:\dlgd-pharma\train\weights\unetpp_best.pth
+[Cflow] 加载成功: D:\dlgd-pharma\train\weights\cflow_best.pth
+============================================================
+
+访问地址: http://localhost:5000
+============================================================
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.102:5000
+Press CTRL+C to quit
+127.0.0.1 - - [24/Aug/2026 23:02:36] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [24/Aug/2026 23:02:47] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [24/Aug/2026 23:02:47] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [24/Aug/2026 23:03:01] "GET /video_feed HTTP/1.1" 200 -
