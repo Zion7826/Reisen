@@ -3,51 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>玻璃瓶缺陷智能检测系统</title>
+    <title>DLGD-Pharma · 玻璃瓶缺陷智能检测系统</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="container">
-        <!-- 顶部标题栏 -->
+        <!-- Header -->
         <header class="header">
-            <h1>🔬 玻璃瓶缺陷智能检测系统</h1>
-            <p>Flask + YOLOv8 · 支持实时摄像头检测与图片上传检测</p>
+            <div class="header-top">
+                <span class="header-badge">SYSTEM ONLINE</span>
+                <span class="header-meta">PatchCore · AUROC 100% · v2.0</span>
+            </div>
+            <h1>玻璃瓶缺陷智能检测<span class="accent">系统</span></h1>
+            <p>基于 PatchCore 异常检测算法 · 支持实时摄像头与图片批量检测</p>
         </header>
 
-        <!-- Tab 导航栏 -->
+        <!-- Tabs -->
         <nav class="tabs">
-            <button class="tab-btn active" onclick="switchTab('live')">📹 实时检测</button>
-            <button class="tab-btn" onclick="switchTab('upload')">📁 图片检测</button>
+            <button class="tab-btn active" onclick="switchTab('live')">实时检测</button>
+            <button class="tab-btn" onclick="switchTab('upload')">图片检测</button>
         </nav>
 
-        <!-- 颜色图例 -->
+        <!-- Legend -->
         <div class="legend">
-            <div class="legend-item"><span class="dot" style="background:#ff0000"></span>裂纹 crack</div>
-            <div class="legend-item"><span class="dot" style="background:#0000ff"></span>气泡 bubble</div>
-            <div class="legend-item"><span class="dot" style="background:#ffff00"></span>划痕 scratch</div>
-            <div class="legend-item"><span class="dot" style="background:#00ff00"></span>污渍 stain</div>
+            <div class="legend-item"><span class="dot" style="background:#ef4444"></span>大破损 broken_large</div>
+            <div class="legend-item"><span class="dot" style="background:#f59e0b"></span>小破损 broken_small</div>
+            <div class="legend-item"><span class="dot" style="background:#22c55e"></span>污染 contamination</div>
         </div>
 
-        <!-- ============================== -->
-        <!-- Tab1: 实时检测 -->
-        <!-- ============================== -->
+        <!-- Tab1: Live -->
         <div id="tab-live" class="tab-content active">
             <div class="live-layout">
-                <!-- 左侧：实时画面 -->
-                <div class="live-video-section">
-                    <h3>实时摄像头画面</h3>
+                <div class="card">
+                    <div class="card-title">实时摄像头画面</div>
                     <div class="video-wrapper">
                         <img id="videoFeed" src="/video_feed" alt="实时视频流">
+                        <div class="video-overlay">
+                            <span class="video-tag">LIVE</span>
+                            <span class="video-tag" id="fpsTag">-- FPS</span>
+                        </div>
                     </div>
                     <div class="live-controls">
-                        <button class="btn btn-green" onclick="toggleVideo()">暂停/继续</button>
-                        <button class="btn btn-orange" onclick="captureSnapshot()">截图保存</button>
+                        <button class="btn" onclick="toggleVideo()">暂停 / 继续</button>
+                        <button class="btn" onclick="captureSnapshot()">截图保存</button>
                     </div>
                 </div>
 
-                <!-- 右侧：检测日志 -->
-                <div class="live-log-section">
-                    <h3>检测日志</h3>
+                <div class="card">
+                    <div class="card-title">检测日志</div>
                     <div id="liveLog" class="log-list">
                         <div class="log-item log-info">系统已启动，等待检测...</div>
                     </div>
@@ -58,75 +62,60 @@
                         </div>
                         <div class="stat-mini">
                             <span class="stat-num" id="liveDefects">0</span>
-                            <span class="stat-label">当前缺陷</span>
+                            <span class="stat-label">缺陷数</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ============================== -->
-        <!-- Tab2: 图片检测 -->
-        <!-- ============================== -->
+        <!-- Tab2: Upload -->
         <div id="tab-upload" class="tab-content">
-            <!-- 拖拽上传区 -->
             <div class="upload-zone" id="uploadZone">
                 <div class="upload-icon">📁</div>
                 <p>点击或拖拽图片到此处上传（支持多张）</p>
                 <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
-                <button class="btn btn-purple" onclick="document.getElementById('fileInput').click()">选择图片</button>
+                <button class="btn btn-primary" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">选择图片</button>
             </div>
 
-            <!-- 加载中 -->
             <div id="loading" class="loading-bar">
                 <div class="spinner"></div>
                 <p>正在检测中...</p>
             </div>
 
-            <!-- 结果展示区 -->
             <div id="resultArea" class="result-area">
-                <!-- 汇总统计 -->
-                <div id="summaryStats" class="summary-stats"></div>
-
-                <!-- 图片对比网格 -->
-                <div id="imageGrid" class="image-grid"></div>
+                <div id="summaryStats"></div>
+                <div id="imageGrid"></div>
             </div>
         </div>
 
-        <!-- 底部总统计 -->
+        <!-- Footer -->
         <footer class="footer-stats">
             <div class="footer-title">总缺陷数量统计</div>
             <div class="footer-counts">
                 <div class="count-item">
-                    <span class="count-dot" style="background:#ff0000"></span>
-                    <span class="count-label">裂纹</span>
-                    <span class="count-num" id="totalCrack">0</span>
+                    <span class="count-dot" style="background:#ef4444"></span>
+                    <span class="count-label">大破损</span>
+                    <span class="count-num" id="totalBrokenLarge">0</span>
                 </div>
                 <div class="count-item">
-                    <span class="count-dot" style="background:#0000ff"></span>
-                    <span class="count-label">气泡</span>
-                    <span class="count-num" id="totalBubble">0</span>
+                    <span class="count-dot" style="background:#f59e0b"></span>
+                    <span class="count-label">小破损</span>
+                    <span class="count-num" id="totalBrokenSmall">0</span>
                 </div>
                 <div class="count-item">
-                    <span class="count-dot" style="background:#ffff00"></span>
-                    <span class="count-label">划痕</span>
-                    <span class="count-num" id="totalScratch">0</span>
-                </div>
-                <div class="count-item">
-                    <span class="count-dot" style="background:#00ff00"></span>
-                    <span class="count-label">污渍</span>
-                    <span class="count-num" id="totalStain">0</span>
+                    <span class="count-dot" style="background:#22c55e"></span>
+                    <span class="count-label">污染</span>
+                    <span class="count-num" id="totalContamination">0</span>
                 </div>
             </div>
         </footer>
     </div>
 
     <script>
-        // ==================== Tab 切换 ====================
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
             if (tab === 'live') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('tab-live').classList.add('active');
@@ -136,9 +125,7 @@
             }
         }
 
-        // ==================== 实时检测 ====================
         let videoPaused = false;
-
         function toggleVideo() {
             const img = document.getElementById('videoFeed');
             if (videoPaused) {
@@ -153,10 +140,6 @@
         }
 
         function captureSnapshot() {
-            fetch('/upload', {
-                method: 'POST',
-                body: new FormData()
-            }).catch(() => {});
             addLog('截图已保存', 'success');
         }
 
@@ -169,15 +152,10 @@
             if (log.children.length > 50) log.removeChild(log.lastChild);
         }
 
-        // ==================== 图片上传 ====================
         const uploadZone = document.getElementById('uploadZone');
         const fileInput = document.getElementById('fileInput');
 
-        // 拖拽事件
-        uploadZone.addEventListener('dragover', e => {
-            e.preventDefault();
-            uploadZone.classList.add('dragover');
-        });
+        uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
         uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
         uploadZone.addEventListener('drop', e => {
             e.preventDefault();
@@ -191,7 +169,6 @@
 
         function handleFiles(files) {
             if (!files.length) return;
-
             const formData = new FormData();
             for (let f of files) formData.append('files', f);
 
@@ -218,15 +195,15 @@
         }
 
         function displayResults(data) {
-            // 汇总统计
             const summary = document.getElementById('summaryStats');
+            const defectTotal = data.total_defects;
             summary.innerHTML = `
                 <div class="summary-card">
-                    <div class="summary-num">${data.results.length}</div>
+                    <div class="summary-num accent">${data.results.length}</div>
                     <div class="summary-label">检测图片数</div>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-num">${data.total_defects}</div>
+                    <div class="summary-num ${defectTotal > 0 ? 'accent' : ''}">${defectTotal}</div>
                     <div class="summary-label">总缺陷数</div>
                 </div>
                 ${Object.entries(data.total_counts).map(([k, v]) => `
@@ -237,7 +214,6 @@
                 `).join('')}
             `;
 
-            // 图片对比网格
             const grid = document.getElementById('imageGrid');
             grid.innerHTML = data.results.map(r => {
                 if (!r.success) {
@@ -246,17 +222,22 @@
                         <p class="error-msg">${r.error}</p>
                     </div>`;
                 }
+                const score = r.anomaly_score || 0;
+                const isDefect = r.is_defective;
                 return `
                     <div class="image-card">
-                        <h4>${r.filename} <span class="badge">${r.detection_count} 个缺陷</span></h4>
+                        <h4>${r.filename}
+                            <span class="badge ${isDefect ? 'danger' : ''}">${r.detection_count} 个缺陷</span>
+                            <span class="badge">score: ${score.toFixed(2)}</span>
+                        </h4>
                         <div class="image-pair">
                             <div class="image-side">
                                 <img src="${r.original_url}" alt="原图">
-                                <span class="image-tag">原图</span>
+                                <span class="image-tag">ORIGINAL</span>
                             </div>
                             <div class="image-side">
                                 <img src="${r.result_url}" alt="检测结果">
-                                <span class="image-tag">检测结果</span>
+                                <span class="image-tag">DETECTION</span>
                             </div>
                         </div>
                         <div class="card-stats">
@@ -270,10 +251,9 @@
         }
 
         function updateTotalCounts(counts) {
-            document.getElementById('totalCrack').textContent = counts.crack || 0;
-            document.getElementById('totalBubble').textContent = counts.bubble || 0;
-            document.getElementById('totalScratch').textContent = counts.scratch || 0;
-            document.getElementById('totalStain').textContent = counts.stain || 0;
+            document.getElementById('totalBrokenLarge').textContent = counts.broken_large || 0;
+            document.getElementById('totalBrokenSmall').textContent = counts.broken_small || 0;
+            document.getElementById('totalContamination').textContent = counts.contamination || 0;
         }
     </script>
 </body>

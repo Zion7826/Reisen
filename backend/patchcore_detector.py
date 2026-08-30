@@ -119,21 +119,42 @@ class PatchCoreDetector:
         class_counts = {name: 0 for name in CLASS_NAMES}
 
         if is_defective:
-            threshold_map = anomaly_map > (anomaly_map.max() * 0.6)
+            threshold_map = anomaly_map > (anomaly_map.max() * 0.5)
             contours, _ = cv2.findContours(
                 threshold_map.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
             )
 
+            valid_contours = []
             for contour in contours:
                 area = cv2.contourArea(contour)
                 if area < 50:
                     continue
+                valid_contours.append(contour)
+
+            total_area = sum(cv2.contourArea(c) for c in valid_contours)
+            total_area_ratio = total_area / (orig_h * orig_w)
+
+            for contour in valid_contours:
+                area = cv2.contourArea(contour)
                 x, y, w, h = cv2.boundingRect(contour)
                 area_ratio = area / (orig_h * orig_w)
 
-                if area_ratio > 0.15:
+                mask_region = np.zeros((orig_h, orig_w), dtype=np.uint8)
+                cv2.drawContours(mask_region, [contour], -1, 255, -1)
+                region_intensity = float(np.mean(anomaly_map[mask_region > 0])) / 255.0
+
+                aspect_ratio = max(w, h) / max(min(w, h), 1)
+                hull = cv2.convexHull(contour)
+                hull_area = cv2.contourArea(hull)
+                solidity = area / max(hull_area, 1)
+
+                cx = x + w / 2
+                cy = y + h / 2
+                center_dist = np.sqrt((cx - orig_w/2)**2 + (cy - orig_h/2)**2) / np.sqrt(orig_w**2 + orig_h**2)
+
+                if solidity < 0.85:
                     cls_idx = 0
-                elif area_ratio > 0.03:
+                elif solidity > 0.95 and area_ratio < 0.05:
                     cls_idx = 1
                 else:
                     cls_idx = 2
@@ -144,6 +165,9 @@ class PatchCoreDetector:
                     'class_name_cn': CLASS_NAMES_CN[cls_idx],
                     'bbox': [x, y, x + w, y + h],
                     'area_ratio': round(area_ratio, 4),
+                    'intensity': round(region_intensity, 3),
+                    'aspect_ratio': round(aspect_ratio, 2),
+                    'solidity': round(solidity, 3),
                     'confidence': round(min(anomaly_score / 50.0, 1.0), 4),
                 })
                 class_counts[CLASS_NAMES[cls_idx]] += 1
