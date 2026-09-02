@@ -13,6 +13,7 @@ import numpy as np
 from pathlib import Path
 from torchvision.models import wide_resnet50_2, Wide_ResNet50_2_Weights
 from sklearn.neighbors import NearestNeighbors
+from sklearn import config_context
 
 CLASS_NAMES = ['broken_large', 'broken_small', 'contamination']
 CLASS_NAMES_CN = ['大破损', '小破损', '污染']
@@ -45,7 +46,7 @@ class PatchCoreDetector:
             self.memory_bank = np.load(memory_bank_path)
             print(f'  记忆库: {self.memory_bank.shape[0]} patches, {self.memory_bank.shape[1]} 维')
 
-            self.nn = NearestNeighbors(n_neighbors=1, algorithm='auto', n_jobs=-1)
+            self.nn = NearestNeighbors(n_neighbors=1, algorithm='auto', n_jobs=4)
             self.nn.fit(self.memory_bank)
             print(f'  KD-Tree索引建立完成')
             print(f'  异常阈值: {anomaly_threshold}')
@@ -102,7 +103,8 @@ class PatchCoreDetector:
         with torch.no_grad():
             test_feat, H, W = self._extract_features(tensor)
 
-        distances, _ = self.nn.kneighbors(test_feat)
+        with config_context(working_memory=256):
+            distances, _ = self.nn.kneighbors(test_feat)
         dist_sq = distances.flatten() ** 2
 
         anomaly_score = float(np.max(dist_sq))

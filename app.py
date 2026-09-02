@@ -58,7 +58,7 @@ CLASS_NAMES_CN = {
 # ============================================================
 UNETPP_PATH = WEIGHTS_DIR / "unetpp_best.pth"
 CFLOW_PATH = WEIGHTS_DIR / "cflow_best.pth"
-PATCHCORE_BANK_PATH = WEIGHTS_DIR / "patchcore" / "memory_bank_augmented.npy"
+PATCHCORE_BANK_PATH = WEIGHTS_DIR / "patchcore" / "memory_bank_glass_normal.npy"
 
 print("=" * 60)
 print("玻璃瓶缺陷智能检测系统 (PatchCore)")

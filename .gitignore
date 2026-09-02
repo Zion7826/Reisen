@@ -25,3 +25,6 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# 自定义记忆库(可由 train_patchcore_custom.py 重新生成)
+train/weights/patchcore/memory_bank_glass_normal.npy
