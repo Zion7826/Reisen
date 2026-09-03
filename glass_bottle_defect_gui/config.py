@@ -13,25 +13,19 @@ MODEL_PATH = PROJECT_ROOT / "runs" / "detect" / "glass_bottle_defect" / "weights
 
 # 缺陷类别定义（与 data.yaml 保持一致）
 CLASS_NAMES = {
-    0: "crack",    # 裂纹
-    1: "bubble",   # 气泡
-    2: "scratch",  # 划痕
-    3: "stain",    # 污渍
+    0: "obvious_damage",  # 明显破损
+    1: "subtle_damage",   # 非明显破损
 }
 
 CLASS_NAMES_CN = {
-    0: "裂纹",
-    1: "气泡",
-    2: "划痕",
-    3: "污渍",
+    0: "明显破损",
+    1: "非明显破损",
 }
 
 # 缺陷类别颜色 (B, G, R)
 CLASS_COLORS = {
-    0: (0, 0, 255),      # 裂纹 crack   - 红色
-    1: (0, 255, 255),    # 气泡 bubble  - 黄色
-    2: (255, 0, 0),      # 划痕 scratch - 蓝色
-    3: (0, 255, 0),      # 污渍 stain   - 绿色
+    0: (0, 0, 255),      # 明显破损 obvious_damage - 红色
+    1: (0, 255, 255),    # 非明显破损 subtle_damage - 黄色
 }
 
 DEFAULT_COLOR = (255, 255, 255)  # 白色

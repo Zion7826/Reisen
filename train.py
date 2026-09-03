@@ -7,11 +7,9 @@
     本脚本基于 ultralytics 官方库,使用 YOLOv8n 预训练模型在玻璃瓶缺陷数据集上
     进行迁移学习,训练完成后自动在验证集上评估,并输出 mAP@0.5 与 mAP@0.5:0.95 指标。
 
-    缺陷类别(共 4 类):
-        0 - crack   (裂纹)
-        1 - bubble  (气泡)
-        2 - scratch (划痕)
-        3 - stain   (污渍)
+    缺陷类别(共 2 类):
+        0 - obvious_damage (明显破损)
+        1 - subtle_damage  (非明显破损)
 
 默认训练超参数:
     epochs  = 200      训练轮数
@@ -275,7 +273,7 @@ def evaluate(model, args, run_name: str, project_name: str, logger: logging.Logg
     logger.info(f"  平均 Recall   : {recall:.4f}")
 
     if map50_per_class is not None:
-        class_names = ["crack", "bubble", "scratch", "stain"]
+        class_names = ["obvious_damage", "subtle_damage"]
         logger.info("  各类别 mAP@0.5:")
         for i, (cls, val) in enumerate(zip(class_names, map50_per_class)):
             logger.info(f"    [{i}] {cls:<8}: {val:.4f}  ({val * 100:.2f}%)")

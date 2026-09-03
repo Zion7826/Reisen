@@ -13,9 +13,9 @@
         3. 测试时计算异常分数，生成异常热力图
     
     缺陷类型:
-        - broken_large  (大裂纹)
-        - broken_small  (小裂纹)
-        - contamination (污染)
+        - obvious_damage (明显破损, MVTec源目录名: broken_large)
+        - subtle_damage  (非明显破损, MVTec源目录名: broken_small)
+        - contamination  (污染)
     
     输出目录:
         runs/anomaly/bottle_padim/

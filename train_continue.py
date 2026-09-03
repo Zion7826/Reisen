@@ -137,7 +137,7 @@ def main():
     # 各类别mAP
     try:
         map50_per_class = metrics.box.maps
-        class_names = ["crack", "bubble", "scratch", "stain"]
+        class_names = ["obvious_damage", "subtle_damage"]
         logger.info("  各类别 mAP@0.5:")
         for i, (cls, val) in enumerate(zip(class_names, map50_per_class)):
             logger.info(f"    [{i}] {cls:<8}: {val:.4f}  ({val * 100:.2f}%)")

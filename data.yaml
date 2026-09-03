@@ -3,9 +3,7 @@ path: D:\demo\datasets\glass_bottle
 train: images/train
 val: images/val
 
-nc: 4
+nc: 2
 names:
-  0: crack      # 裂纹
-  1: bubble     # 气泡
-  2: scratch    # 划痕
-  3: stain      # 污渍
+  0: obvious_damage  # 明显破损
+  1: subtle_damage   # 非明显破损

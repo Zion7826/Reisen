@@ -5,10 +5,8 @@
 基于 PyTorch + ultralytics YOLO 实现对玻璃瓶图像的缺陷检测。
 
 支持检测的缺陷类别：
-    0: crack   裂纹
-    1: bubble  气泡
-    2: scratch 划痕
-    3: stain   污渍
+    0: obvious_damage 明显破损
+    1: subtle_damage  非明显破损
 
 使用方法：
     python detect.py --image 图片路径
@@ -33,28 +31,22 @@ from ultralytics import YOLO
 # 注意：索引顺序必须与 best.pt 训练时的 data.yaml 类别顺序一致
 # ============================================================
 CLASS_NAMES = {
-    0: "crack",    # 裂纹
-    1: "bubble",   # 气泡
-    2: "scratch",  # 划痕
-    3: "stain",    # 污渍
+    0: "obvious_damage",  # 明显破损
+    1: "subtle_damage",   # 非明显破损
 }
 
 # 中文名称映射（用于在画面上显示）
 CLASS_NAMES_CN = {
-    0: "裂纹",
-    1: "气泡",
-    2: "划痕",
-    3: "污渍",
+    0: "明显破损",
+    1: "非明显破损",
 }
 
 # ============================================================
-# 4 类缺陷对应的标注颜色 (B, G, R) 格式，OpenCV 默认使用 BGR
+# 各类缺陷对应的标注颜色 (B, G, R) 格式，OpenCV 默认使用 BGR
 # ============================================================
 CLASS_COLORS = {
-    0: (0, 0, 255),      # 裂纹 crack   - 红色
-    1: (0, 255, 255),    # 气泡 bubble  - 黄色
-    2: (255, 0, 0),      # 划痕 scratch - 蓝色
-    3: (0, 255, 0),      # 污渍 stain   - 绿色
+    0: (0, 0, 255),      # 明显破损 obvious_damage - 红色
+    1: (0, 255, 255),    # 非明显破损 subtle_damage - 黄色
 }
 
 # 默认颜色（当类别索引超出预设范围时使用）

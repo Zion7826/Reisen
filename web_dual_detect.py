@@ -23,13 +23,11 @@ UPLOAD_FOLDER = "detection_results"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # 类别定义
-CLASS_NAMES = {0: "crack", 1: "bubble", 2: "scratch", 3: "stain"}
-CLASS_NAMES_CN = {0: "裂纹", 1: "气泡", 2: "划痕", 3: "污渍"}
+CLASS_NAMES = {0: "obvious_damage", 1: "subtle_damage"}
+CLASS_NAMES_CN = {0: "明显破损", 1: "非明显破损"}
 CLASS_COLORS = {
-    0: (0, 0, 255),    # 裂纹 - 红色
-    1: (0, 255, 255),  # 气泡 - 黄色
-    2: (255, 0, 0),    # 划痕 - 蓝色
-    3: (0, 255, 0),    # 污渍 - 绿色
+    0: (0, 0, 255),      # 明显破损 - 红色
+    1: (0, 255, 255),    # 非明显破损 - 黄色
 }
 
 # 加载模型
@@ -400,10 +398,8 @@ HTML_TEMPLATE = """
         
         <div class="content">
             <div class="color-legend">
-                <div class="color-item"><div class="color-box" style="background: #ff0000;"></div>裂纹</div>
-                <div class="color-item"><div class="color-box" style="background: #ffff00;"></div>气泡</div>
-                <div class="color-item"><div class="color-box" style="background: #0000ff;"></div>划痕</div>
-                <div class="color-item"><div class="color-box" style="background: #00ff00;"></div>污渍</div>
+                <div class="color-item"><div class="color-box" style="background: #ff0000;"></div>明显破损</div>
+                <div class="color-item"><div class="color-box" style="background: #ffff00;"></div>非明显破损</div>
             </div>
             
             <!-- 实时检测 -->

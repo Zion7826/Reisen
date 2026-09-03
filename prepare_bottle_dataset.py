@@ -12,16 +12,16 @@ from pathlib import Path
 import random
 
 
-# 类别定义
+# 类别定义（CLASS_MAP 的键为 MVTec 源数据集的异常类型目录名，不可修改）
 CLASS_MAP = {
-    "broken_large": 0,    # 大破损
-    "broken_small": 1,    # 小破损
-    "contamination": 2,   # 污染
+    "broken_large": 0,    # MVTec源目录名，对应: 明显破损
+    "broken_small": 1,    # MVTec源目录名，对应: 非明显破损
+    "contamination": 2,   # MVTec源目录名，对应: 污染（数据中存在污染素材，保留）
 }
 
 CLASS_NAMES = {
-    0: "broken_large",
-    1: "broken_small",
+    0: "obvious_damage",
+    1: "subtle_damage",
     2: "contamination",
 }
 
@@ -167,8 +167,8 @@ val: images/val
 
 nc: {len(CLASS_NAMES)}
 names:
-  0: broken_large    # 大破损
-  1: broken_small    # 小破损
+  0: obvious_damage  # 明显破损
+  1: subtle_damage   # 非明显破损
   2: contamination   # 污染
 """
 

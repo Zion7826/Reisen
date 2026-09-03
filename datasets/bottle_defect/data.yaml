@@ -5,6 +5,6 @@ val: images/val
 
 nc: 3
 names:
-  0: broken_large    # 大破损
-  1: broken_small    # 小破损
+  0: obvious_damage  # 明显破损
+  1: subtle_damage   # 非明显破损
   2: contamination   # 污染

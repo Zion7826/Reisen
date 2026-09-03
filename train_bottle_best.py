@@ -126,7 +126,7 @@ def train_round(model_path, round_num, logger, epochs=300, lr=0.001):
     # 各类别mAP
     try:
         map50_per_class = metrics.box.maps
-        class_names = ["broken_large", "broken_small", "contamination"]
+        class_names = ["obvious_damage", "subtle_damage", "contamination"]
         logger.info("  各类别 mAP@0.5:")
         for i, (cls, val) in enumerate(zip(class_names, map50_per_class)):
             logger.info(f"    [{i}] {cls:<15}: {val:.4f}  ({val * 100:.2f}%)")
