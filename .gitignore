@@ -11,9 +11,6 @@ env/
 uploads/
 output/
 
-# 数据集（太大）
-data/
-
 # 日志和临时文件
 *.log
 *.out
@@ -26,5 +23,7 @@ Thumbs.db
 .vscode/
 .idea/
 
-# 自定义记忆库(可由 train_patchcore_custom.py 重新生成)
+# 大文件分片重建源(用 train/merge_memory_bank.py 从 glass_normal_parts/ 合并)
 train/weights/patchcore/memory_bank_glass_normal.npy
+data/coco/annotations/instances_train2017.json
+data/coco/annotations/person_keypoints_train2017.json
